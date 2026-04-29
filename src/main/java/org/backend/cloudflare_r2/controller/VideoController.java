@@ -1,0 +1,62 @@
+package org.backend.cloudflare_r2.controller;
+
+import lombok.RequiredArgsConstructor;
+import org.backend.cloudflare_r2.dto.UploadUrlRequest;
+import org.backend.cloudflare_r2.dto.UploadUrlResponse;
+import org.backend.cloudflare_r2.dto.VideoRequest;
+import org.backend.cloudflare_r2.dto.VideoResponse;
+import org.backend.cloudflare_r2.entity.Video;
+import org.backend.cloudflare_r2.repo.VideoRepository;
+import org.backend.cloudflare_r2.service.R2Service;
+import org.backend.cloudflare_r2.service.VideoService;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/videos")
+@RequiredArgsConstructor
+@CrossOrigin
+public class VideoController {
+
+    private final R2Service r2Service;
+    private final VideoService videoService;
+    private final VideoRepository repository;
+
+//    @Value("${cloudflare.r2.endpoint}")
+//    private String endpoint;
+//
+//    @Value("${cloudflare.r2.bucket}")
+//    private String bucket;
+
+    @Value("${cloudflare.r2.public-url}")
+    private String publicUrl;
+
+    private String buildVideoUrl(String key) {
+        return publicUrl + "/" + key.replace(" ", "%20");
+    }
+
+    @PostMapping("/upload-url")
+    public UploadUrlResponse uploadUrl(
+            @RequestBody UploadUrlRequest request
+    ) {
+        return r2Service.generateUploadUrl(request.getFileName());
+    }
+
+    @PostMapping("/upload")
+    public Video upload(
+            @RequestParam("file") MultipartFile file,
+            @RequestParam("title") String title
+    ) throws Exception {
+
+        return videoService.uploadAndProcess(file, title);
+    }
+
+    @GetMapping
+    public List<Video> getAll() {
+        return videoService.getAll();
+    }
+}
