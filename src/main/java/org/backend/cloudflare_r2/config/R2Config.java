@@ -34,6 +34,7 @@ public class R2Config {
                                 AwsBasicCredentials.create(accessKey, secretKey)
                         )
                 )
+                .forcePathStyle(true)
                 .build();
     }
 
