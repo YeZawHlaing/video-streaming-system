@@ -19,49 +19,44 @@ public class VideoService {
     private final VideoRepository repository;
     private final VideoProcessingService processingService;
     private final R2UploadService r2UploadService;
+    private final VideoAsyncProcessor videoAsyncProcessor;
 
     @Value("${cloudflare.r2.public-url}")
     private String publicUrl;
 
-    public Video uploadAndProcess(MultipartFile file, String title) throws Exception {
+    public VideoResponse uploadAndProcess(MultipartFile file, String title) throws Exception {
 
         long timestamp = System.currentTimeMillis();
 
-        // 1. Save temp file
         File tempDir = new File("/tmp/videos/" + timestamp);
         tempDir.mkdirs();
 
         File inputFile = new File(tempDir, file.getOriginalFilename());
         file.transferTo(inputFile);
 
-        // 2. Convert to HLS
-        File hlsDir = processingService.convertToHls(inputFile, tempDir + "/hls");
-
-        // 3. Generate thumbnail
-        File thumbnailFile = new File(tempDir, "thumbnail.jpg");
-        processingService.generateThumbnail(inputFile, thumbnailFile);
-
-        // 4. Upload HLS to R2
-        String keyPrefix = "videos/" + timestamp;
-        r2UploadService.uploadFolder(hlsDir, keyPrefix);
-
-        // 5. Upload thumbnail to R2
-        String thumbKey = keyPrefix + "/thumbnail.jpg";
-        r2UploadService.uploadFile(thumbnailFile, thumbKey);
-
-        // 6. Build URLs
-        String streamUrl = publicUrl + "/" + keyPrefix + "/index.m3u8";
-        String thumbnailUrl = publicUrl + "/" + thumbKey;
-
-        // 7. Save DB
+        // 1. Save DB FIRST
         Video video = new Video();
         video.setTitle(title);
-        video.setStreamUrl(streamUrl);
-        video.setThumbnailUrl(thumbnailUrl);
-        video.setStatus("READY");
+        video.setStatus("PROCESSING");
         video.setCreatedAt(LocalDateTime.now());
 
-        return repository.save(video);
+        Video saved = repository.save(video);
+
+        // 2. Trigger async processing (DO NOT WAIT)
+        videoAsyncProcessor.processVideo(
+                saved.getId(),
+                inputFile,
+                title,
+                publicUrl
+        );
+
+        // 3. Return immediately
+        VideoResponse response = new VideoResponse();
+        response.setId(saved.getId());
+        response.setTitle(title);
+//        response.setStatus("PROCESSING");
+
+        return response;
     }
 
     public List<Video> getAll() {
