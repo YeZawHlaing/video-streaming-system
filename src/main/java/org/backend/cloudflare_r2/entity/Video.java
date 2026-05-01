@@ -25,5 +25,8 @@ public class Video {
 
     private String status; // UPLOADED, PROCESSING, READY
 
+    @Column(name = "thumbnail_url")
+    private String thumbnailUrl;
+
     private LocalDateTime createdAt;
 }
