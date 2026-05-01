@@ -5,5 +5,6 @@ import lombok.Data;
 @Data
 public class VideoRequest {
     private String title;
+    private String thumbnailUrl;
     private String videoUrl;
 }

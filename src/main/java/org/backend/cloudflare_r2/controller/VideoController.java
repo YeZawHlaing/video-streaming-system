@@ -3,8 +3,6 @@ package org.backend.cloudflare_r2.controller;
 import lombok.RequiredArgsConstructor;
 import org.backend.cloudflare_r2.dto.UploadUrlRequest;
 import org.backend.cloudflare_r2.dto.UploadUrlResponse;
-import org.backend.cloudflare_r2.dto.VideoRequest;
-import org.backend.cloudflare_r2.dto.VideoResponse;
 import org.backend.cloudflare_r2.entity.Video;
 import org.backend.cloudflare_r2.repo.VideoRepository;
 import org.backend.cloudflare_r2.service.R2Service;
@@ -26,12 +24,6 @@ public class VideoController {
     private final VideoService videoService;
     private final VideoRepository repository;
 
-//    @Value("${cloudflare.r2.endpoint}")
-//    private String endpoint;
-//
-//    @Value("${cloudflare.r2.bucket}")
-//    private String bucket;
-
     @Value("${cloudflare.r2.public-url}")
     private String publicUrl;
 
@@ -46,13 +38,16 @@ public class VideoController {
         return r2Service.generateUploadUrl(request.getFileName());
     }
 
+    // ===============================
+    // 2. Direct Upload (your main flow)
+    // ===============================
     @PostMapping("/upload")
     public Video upload(
             @RequestParam("file") MultipartFile file,
             @RequestParam("title") String title
     ) throws Exception {
 
-        return videoService.uploadAndProcess(file, title);
+        return videoService.uploadAndProcess(file,title);
     }
 
     @GetMapping
