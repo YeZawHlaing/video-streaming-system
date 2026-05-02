@@ -13,5 +13,5 @@ public class VideoResponse {
     private Long id;
     private String title;
     private String thumbnailUrl;
-    private String videoUrl;
+    private String streamUrl;
 }

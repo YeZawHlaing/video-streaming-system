@@ -27,7 +27,7 @@ public class VideoService {
     // ===============================
     // UPLOAD VIDEO (ASYNC + CLEAR CACHE)
     // ===============================
-    @CacheEvict(value = "videos", allEntries = true)
+//    @CacheEvict(value = "videos", allEntries = true)
     public VideoResponse uploadAndProcess(MultipartFile file, String title) throws Exception {
 
         long timestamp = System.currentTimeMillis();
@@ -61,7 +61,7 @@ public class VideoService {
     // ===============================
     // GET VIDEOS (CACHED + PAGINATION)
     // ===============================
-    @Cacheable(value = "videos", key = "#page + '-' + #size")
+//    @Cacheable(value = "videos", key = "#page + '-' + #size")
     public Page<VideoResponse> getVideos(int page, int size) {
 
         Pageable pageable = PageRequest.of(
@@ -84,7 +84,7 @@ public class VideoService {
         res.setId(video.getId());
         res.setTitle(video.getTitle());
         res.setThumbnailUrl(video.getThumbnailUrl());
-//        res.setStreamUrl(video.getStreamUrl());
+        res.setStreamUrl(video.getStreamUrl());
 //        res.setStatus(video.getStatus());
 //        res.setCreatedAt(video.getCreatedAt());
 
