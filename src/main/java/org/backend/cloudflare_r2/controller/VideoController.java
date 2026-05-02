@@ -9,6 +9,7 @@ import org.backend.cloudflare_r2.repo.VideoRepository;
 import org.backend.cloudflare_r2.service.R2Service;
 import org.backend.cloudflare_r2.service.VideoService;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -49,9 +50,17 @@ public class VideoController {
     ) throws Exception {
         return videoService.uploadAndProcess(file, title);
     }
+//
+//    @GetMapping("/getAll")
+//    public List<Video> getAll() {
+//        return videoService.getAll();
+//    }
 
     @GetMapping
-    public List<Video> getAll() {
-        return videoService.getAll();
+    public Page<VideoResponse> getVideos(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "6") int size
+    ) {
+        return videoService.getVideos(page, size);
     }
 }
