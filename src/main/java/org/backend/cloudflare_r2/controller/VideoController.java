@@ -63,4 +63,12 @@ public class VideoController {
     ) {
         return videoService.getVideos(page, size);
     }
+
+    @DeleteMapping("/{id}")
+    public String deleteVideo(@PathVariable Long id) {
+
+        videoService.deleteVideoById(id);
+
+        return "Video deleted successfully with id: " + id;
+    }
 }

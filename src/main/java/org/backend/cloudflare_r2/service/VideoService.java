@@ -1,5 +1,6 @@
 package org.backend.cloudflare_r2.service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.backend.cloudflare_r2.dto.VideoResponse;
 import org.backend.cloudflare_r2.entity.Video;
@@ -86,8 +87,21 @@ public class VideoService {
         res.setThumbnailUrl(video.getThumbnailUrl());
         res.setStreamUrl(video.getStreamUrl());
 //        res.setStatus(video.getStatus());
-//        res.setCreatedAt(video.getCreatedAt());
+        res.setCreatedAt(video.getCreatedAt());
 
         return res;
+    }
+
+    @Transactional
+//    @CacheEvict(value = "videos", allEntries = true)
+    public void deleteVideoById(Long id) {
+
+        Video video = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Video not found with id: " + id));
+
+        // TODO (optional later): delete from Cloudflare R2
+        // r2UploadService.deleteFolder(...)
+
+        repository.delete(video);
     }
 }
