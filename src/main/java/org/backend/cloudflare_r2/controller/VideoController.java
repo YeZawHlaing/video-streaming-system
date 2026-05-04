@@ -19,7 +19,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/videos")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "https://video-streaming-platform.yzaw3684.workers.dev")
 public class VideoController {
 
     private final R2Service r2Service;
