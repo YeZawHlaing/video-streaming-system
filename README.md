@@ -1,4 +1,4 @@
-# 📺 Video Streaming Backend API (Mini YouTube System)
+# Video Streaming Backend API (Mini YouTube System)
 
 A scalable **video streaming backend system** built with **Spring Boot 4 + Java 21**, supporting **HLS streaming, FFmpeg processing, MySQL, and Cloudflare R2 storage**.  
 This project is designed as a **YouTube-like video backend architecture**.
