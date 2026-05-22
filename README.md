@@ -39,6 +39,7 @@ Return streaming URL (.m3u8)
 
 # 📁 Project Structure
 
+```text
 
 src/main/java/org/backend/cloudflare_r2/
 │
@@ -49,10 +50,11 @@ src/main/java/org/backend/cloudflare_r2/
 ├── dto/            → Request/Response models
 ├── config/         → R2 + environment config
 └── CloudflareR2Application.java
-
+```
 ---
 
 #  ⚙️️ Enviroment variables
+```text
 
 CLOUDFLARE_R2_ACCESS_KEY=your_access_key
 CLOUDFLARE_R2_SECRET_KEY=your_secret_key
@@ -63,10 +65,13 @@ CLOUDFLARE_R2_PUBLIC_URL=https://pub-xxxx.r2.dev
 DB_URL=jdbc:mysql://localhost:3306/video_db
 DB_USERNAME=root
 DB_PASSWORD=root
-
+```
 ---
 
 # 🧾 application.properties
+
+```text
+
 spring:
 datasource:
 url: ${DB_URL}
@@ -80,7 +85,7 @@ secret-key: ${CLOUDFLARE_R2_SECRET_KEY}
 endpoint: ${CLOUDFLARE_R2_ENDPOINT}
 bucket: ${CLOUDFLARE_R2_BUCKET}
 public-url: ${CLOUDFLARE_R2_PUBLIC_URL}
-
+```
 ---
 
 # 📡 API Endpoints
