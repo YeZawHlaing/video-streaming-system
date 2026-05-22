@@ -7,14 +7,29 @@ This project is designed as a **YouTube-like video backend architecture**.
 
 # 🚀 Tech Stack
 
-- ☕ Java 21
-- 🌱 Spring Boot 4
-- 🐬 MySQL 8
-- ☁️ :contentReference[oaicite:0]{index=0}
-- 🎬 FFmpeg (Video Processing)
-- 📡 HLS Streaming (.m3u8)
-- 🐳 Docker
-- ☁️ AWS EC2 (Deployment)
+
+
+<p align="left">
+
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" width="45" height="45"/>
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" width="45" height="45"/>
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" width="45" height="45"/>
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/maven/maven-original.svg" width="45" height="45"/>
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" width="45" height="45"/>
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cloudflare/cloudflare-original.svg" width="45" height="45"/>
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" width="45" height="45"/>
+
+</p>
+
+| Technology | Version |
+|---|---|
+| ☕ Java | 21 |
+| 🌱 Spring Boot | 4 |
+| 🐬 MySQL | 8 |
+| 🔨 Maven | Latest |
+| 🐳 Docker | Latest |
+| ☁️ Cloudflare | CDN / DNS |
+| ☁️ AWS EC2 | Deployment |
 
 ---
 
